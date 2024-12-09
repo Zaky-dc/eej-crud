@@ -1,0 +1,42 @@
+<%- include('layout/headerWithoutNavbar') %>
+
+<body>
+    <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+        <div class="card shadow p-4" style="width: 100%; max-width: 400px; margin-top: 20px;margin-bottom: 20px;">
+            <h1 class="h4 text-center mb-4">Adicionar Novo EEG</h1>
+            <form action="/add" method="post">
+                <div class="form-group">
+                    <label for="paciente">Paciente</label>
+                    <input type="text" id="paciente" name="paciente" class="form-control" placeholder="Nome do Paciente" required>
+                </div>
+                <div class="form-group">
+                    <label for="contacto">Contacto</label>
+                    <input type="text" id="contacto" name="contacto" class="form-control" placeholder="Contacto do Paciente" required>
+                </div>
+                <div class="form-group">
+                    <label for="tecnico">Técnico</label>
+                    <input type="text" id="tecnico" name="tecnico" class="form-control" placeholder="Nome do Técnico" required>
+                </div>
+                <div class="form-group">
+                    <label for="neurologista">Neurologista</label>
+                    <input type="text" id="neurologista" name="neurologista" class="form-control" placeholder="Nome do Neurologista" required>
+                </div>
+                <div class="form-group">
+                    <label for="entrega">Data de Entrega</label>
+                    <input type="date" id="entrega" name="entrega" class="form-control" lang="pt-BR" min="<%= feitoDate %>" placeholder="dd/mm/aa" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" class="form-control" required>
+                        <option value="Entregue">Entregue</option>
+                        <option value="Pendente">Pendente</option>
+                        <option value="Cancelado">Cancelado</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+
+<%- include('layout/cleanfooter') %>

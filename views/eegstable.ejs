@@ -1,0 +1,199 @@
+<%- include('layout/header') %>
+
+<div id="content">
+
+    <!------top-navbar-start----------->
+
+    <div class="top-navbar">
+       <div class="xd-topbar">
+          <div class="row">
+             <div class="col-2 col-md-1 col-lg-1 order-2 order-md-1 align-self-center">
+                <div class="xp-menubar">
+                   <span class="material-icons text-white">signal_cellular_alt</span>
+                </div>
+             </div>
+
+             <div class="col-md-5 col-lg-3 order-3 order-md-2">
+                <div class="xp-searchbar">
+                   <form method="GET" action="/eeg">
+                      <div class="input-group">
+                         <input type="search" class="form-control" placeholder="Search" name="search" value="<%= searchTerm %>">
+                         <div class="input-group-append">
+                            <button class="btn" type="submit" id="button-addon2">Go
+                            </button>
+                         </div>
+                      </div>
+                   </form>
+                </div>
+             </div>
+
+             <!-- 
+                  <div class="col-10 col-md-6 col-lg-8 order-1 order-md-3">
+                      <div class="xp-profilebar text-right">
+                         <nav class="navbar p-0">
+                            <ul class="nav navbar-nav flex-row ml-auto">
+                            <li class="dropdown nav-item active">
+                              <a class="nav-link" href="#" data-toggle="dropdown">
+                               <span class="material-icons">notifications</span>
+                               <span class="notification">4</span>
+                              </a>
+                               <ul class="dropdown-menu">
+                                  <li><a href="#">You Have 4 New Messages</a></li>
+                                  <li><a href="#">You Have 4 New Messages</a></li>
+                                  <li><a href="#">You Have 4 New Messages</a></li>
+                                  <li><a href="#">You Have 4 New Messages</a></li>
+                               </ul>
+                            </li>
+                            
+                            <li class="nav-item">
+                              <a class="nav-link" href="#">
+                                <span class="material-icons">question_answer</span>
+                              </a>
+                            </li>
+                            
+                            <li class="dropdown nav-item">
+                              <a class="nav-link" href="#" data-toggle="dropdown">
+                               <img src="img/user.jpg" style="width:40px; border-radius:50%;"/>
+                               <span class="xp-user-live"></span>
+                              </a>
+                               <ul class="dropdown-menu small-menu">
+                                  <li><a href="#">
+                                  <span class="material-icons">person_outline</span>
+                                  Profile
+                                  </a></li>
+                                  <li><a href="#">
+                                  <span class="material-icons">settings</span>
+                                  Settings
+                                  </a></li>
+                                  <li><a href="#">
+                                  <span class="material-icons">logout</span>
+                                  Logout
+                                  </a></li>
+                                  
+                               </ul>
+                            </li>
+                            
+                            
+                            </ul>
+                         </nav>
+                      </div>
+                  </div>
+                   -->
+          </div>
+
+
+
+          <div class="xp-breadcrumbbar text-center">
+             <h4 class="page-title">Lancamentos EEG</h4>
+             <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Shifaa</a></li>
+                <li class="breadcrumb-item active" aria-curent="page">Server</li>
+             </ol>
+          </div>
+
+
+       </div>
+    </div>
+    <!------top-navbar-end----------->
+
+    <!------main-content-start----------->
+
+  
+
+
+<div class="main-content">
+    <div class="row">
+       <div class="col-md-12">
+          <div class="table-wrapper">
+             <div class="table-title">
+                <div class="row">
+                   <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
+                      <h2 class="ml-lg-2">Gestao de ElectroEncefalograma</h2>
+                   </div>
+                   <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-center">
+                      <a href="/add" class="btn btn-success" data-toggle="modal">
+                         <i class="material-icons">&#xE147;</i>
+                         <span>Add EEG</span>
+                      </a>
+
+                   </div>
+                </div>
+             </div>
+             <table class="table table-striped table-hover">
+                <thead>
+                   <tr>
+                      <th>Paciente</th>
+                      <th>Contacto</th>
+                      <th>Técnico</th>
+                      <th>Neurologista</th>
+                      <th>Data Feito</th>
+                      <th>Data Para Entrega</th>
+                      <th>Status</th>
+                      <th>Ações</th>
+                   </tr>
+                </thead>
+                <tbody>
+
+
+                   <% mydata.forEach((eeg)=>{%>
+                      <tr>
+                         <td>
+                            <%= eeg.paciente %>
+                         </td>
+                         <td>
+                            <%= eeg.contacto %>
+                         </td>
+                         <td>
+                            <%= eeg.tecnico %>
+                         </td>
+                         <td>
+                            <%= eeg.neurologista %>
+                         </td>
+                         <td>
+                            <%= eeg.feitoem.toLocaleDateString('pt-BR') %>
+                         </td>
+                         <td>
+                            <%= eeg.entrega.toLocaleDateString('pt-BR') %>
+                         </td>
+                         <td>
+                            <%= eeg.status %>
+                         </td>
+                            <td>
+                                <a href="/edit/<%- eeg._id %>" class="edit" data-toggle="modal">
+                                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                </a>
+                                <a href="javascript:void(0);" onclick="confirmDelete('<%- eeg._id %>')" class="delete" data-toggle="modal">
+                                    <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                                </a>
+                            </td>
+                            <% }) %>
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="hint-text">
+                        Mostrando <b><%= (currentPage - 1) * ITEMS_PER_PAGE + 1 %> - <%= Math.min(currentPage * ITEMS_PER_PAGE, totalItems) %></b> no total de <b><%= totalItems %></b>
+                    </div>
+                    <ul class="pagination">
+                        <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                            <a href="?page=<%= currentPage - 1 %>&search=<%= searchTerm %>"  class="page-link">Anterior</a>
+                        </li>
+                        <% for (let i = 1; i <= totalPages; i++) { %>
+                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                <a href="?page=<%= i %>&search=<%= searchTerm %>" class="page-link"><%= i %></a>
+                            </li>
+                        <% } %>
+                        <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+                            <a href="?page=<%= currentPage + 1 %>&search=<%= searchTerm %>" class="page-link">Próximo</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>            
+                
+            </div>
+            </div>
+
+        </div>
+
+        </div>
+    </div>
+    <%- include('layout/footer') %>
