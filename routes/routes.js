@@ -49,6 +49,7 @@ router.get('/eeg', (req, res) => {
     Eeg.countDocuments(searchQuery).then(totalItems => {
         // Consultar os EEGs para a página atual
         Eeg.find(searchQuery)
+            .sort({_id:-1})
             .skip(skip) // Pular os registros anteriores
             .limit(ITEMS_PER_PAGE) // Limitar o número de registros
             .then(mydata => {
