@@ -29,7 +29,10 @@ let mySchema= new schema
         required: true,
         validate: {
             validator: function (value) {
-                return value > this.feitoem; // Verifica se é maior que feitoem
+               const feitoemDate = new Date(this.feitoem);
+                feitoemDate.setHours(0, 0, 0, 0); // Zera a hora
+
+                return value >= feitoemDate; // Verifica se entrega é maior ou igual a feitoem
             },
             message: "A data de entrega deve ser posterior à data de feito.",
         },
