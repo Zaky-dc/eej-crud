@@ -51,7 +51,7 @@ app.listen(PORT,()=>{
     console.log(`server started at http://localhost:${PORT}`)
 })
 
-cron.schedule('13 22 * * *', async () => {
+cron.schedule('42 22 * * *', async () => {
     try {
         const hoje = new Date().toISOString().split('T')[0]; // Data atual no formato AAAA-MM-DD
 
